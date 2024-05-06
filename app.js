@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 import routes from './routes';
 
 dotenv.config();
@@ -7,6 +8,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(morgan('dev'));
 
 routes.forEach((route) => {
   route(app);

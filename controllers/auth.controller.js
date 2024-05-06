@@ -1,22 +1,28 @@
 import AuthService from '../services/auth';
+import { jsonFailed, jsonSuccess } from '../utils/messageFormat.helpers';
 
-const signin = async (req, res) => {
-  const { email } = req.body;
+const signIn = async (req, res) => {
+  const { email, token, password } = req.body;
 
   try {
-    const user = await AuthService.login(email);
-    res.status(200).send({
-      success: true,
-      message: 'User logined successfully',
-      user,
+    const user = await AuthService.login(email, token, password);
+
+    jsonSuccess(res, 200, 'Login successful', user.mappedData, {
+      token: user.token,
     });
+    // res.status(200).send({
+    //   success: true,
+    //   message: 'Login successful',
+    //   user,
+    // });
   } catch (error) {
-    res
-      .status(error.statusCode || 400)
-      .send({ success: false, message: error.message, error });
+    jsonFailed(res, error);
+    // res
+    //   .status(error.statusCode || 400)
+    //   .send({ success: false, message: error.message, error });
   }
 };
 
 export default {
-  signin,
+  signIn,
 };
