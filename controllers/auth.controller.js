@@ -2,10 +2,10 @@ import AuthService from '../services/auth';
 import { jsonFailed, jsonSuccess } from '../utils/messageFormat.helpers';
 
 const signIn = async (req, res) => {
-  const { email, token, password } = req.body;
+  const { email, token } = req.body;
 
   try {
-    const user = await AuthService.login(email, token, password);
+    const user = await AuthService.login(email, token);
 
     jsonSuccess(res, 200, 'Login successful', user.mappedData, {
       token: user.token,
