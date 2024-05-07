@@ -6,11 +6,11 @@ const validateSigninRequest = [
     .withMessage('Email is required')
     .isEmail()
     .withMessage('Invalid email format'),
-  // body('password')
-  //   .notEmpty()
-  //   .withMessage('Password is required')
-  //   .isLength({ min: 8 })
-  //   .withMessage('Password must be at least 8 characters long'),
+  body('token')
+    .notEmpty()
+    .withMessage('Token is required')
+    .isAlphanumeric()
+    .withMessage('Invalid token format'),
 
   (req, res, next) => {
     const errors = validationResult(req);
