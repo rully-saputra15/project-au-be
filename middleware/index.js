@@ -1,3 +1,4 @@
 import validateSigninRequest from './validateSigninRequest';
+import validatePostRequest from './validatePostRequest';
 
-export { validateSigninRequest };
+export { validateSigninRequest, validatePostRequest };
