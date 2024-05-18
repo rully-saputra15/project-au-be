@@ -1,27 +1,33 @@
+import { generateSlug } from '../../utils/generateSlug.utils';
 import SupabaseClient from '../supabase';
 
 const PostService = {
   insertPost: async (
-    title,
+    user_id,
     content,
     location,
-    ojol_name,
     vendor_name,
     service_type,
     plate_number
   ) => {
-    const { data, error } = await SupabaseClient.from('Post')
-      .insert({
-        user_id: 1, // ini harusnya get dari req.user.
-        title,
+    const slug = generateSlug(content);
+
+    const { data, error } = await SupabaseClient.from('Post').insert({
+      user_id,
+      content,
+      slug,
+      location,
+      vendor_name,
+      service_type,
+      plate_number,
+    }).select(`
+        id,
         content,
+        slug,
         location,
-        ojol_name,
-        vendor_name,
         service_type,
-        plate_number,
-      })
-      .select();
+        plate_number
+      `);
 
     if (error) throw error;
 

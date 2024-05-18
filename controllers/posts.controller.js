@@ -18,20 +18,13 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const {
-      title,
-      content,
-      location,
-      ojol_name,
-      vendor_name,
-      service_type,
-      plate_number,
-    } = req.body;
+    const { content, location, vendor_name, service_type, plate_number } =
+      req.body;
+
     const data = await PostService.insertPost(
-      title,
+      4, // ini nanti dari req.user
       content,
       location,
-      ojol_name,
       vendor_name,
       service_type,
       plate_number
