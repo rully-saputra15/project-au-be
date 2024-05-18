@@ -45,7 +45,6 @@ const PostService = {
     content,
     slug,
     location,
-      ojol_name,
       vendor_name,
       service_type,
       plate_number,
