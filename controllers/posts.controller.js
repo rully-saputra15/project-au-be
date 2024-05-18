@@ -1,4 +1,3 @@
-import AuthService from '../services/auth';
 import PostService from '../services/posts';
 import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
 
