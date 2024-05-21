@@ -1,28 +1,27 @@
 import { body, validationResult } from 'express-validator';
 
-const validetPostRequest = [
-  body('content')
+const validatePostRequest = [
+  body('experience')
     .notEmpty()
-    .withMessage('Content is required')
+    .withMessage('Experience is required')
     .isString()
-    .withMessage('Invalid content format'),
-  // Nanti slugnya dihandle di be aja kan ya ini?
-  body('location')
+    .withMessage('Invalid experience format'),
+  body('daerah_driver')
     .notEmpty()
-    .withMessage('Location is required')
+    .withMessage('Driver location is required')
     .isString()
-    .withMessage('Invalid location format'),
-  body('vendor_name')
+    .withMessage('Invalid driver location format'),
+  body('platform')
     .notEmpty()
-    .withMessage('Vendor name is required')
+    .withMessage('Platform name is required')
     .isString()
-    .withMessage('Invalid vendor name format'),
-  body('service_type')
+    .withMessage('Invalid platform name format'),
+  body('service')
     .notEmpty()
     .withMessage('Service type is required')
     .isString()
     .withMessage('Invalid service type format'),
-  body('plate_number')
+  body('nopol')
     .notEmpty()
     .withMessage('Plate number is required')
     .isString()
@@ -41,4 +40,4 @@ const validetPostRequest = [
   },
 ];
 
-export default validetPostRequest;
+export default validatePostRequest;
