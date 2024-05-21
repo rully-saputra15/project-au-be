@@ -4,22 +4,23 @@ import SupabaseClient from '../supabase';
 const PostService = {
   insertPost: async (
     user_id,
-    content,
-    location,
-    vendor_name,
-    service_type,
-    plate_number
+    daerah_driver,
+    experience,
+    nopol,
+    platform,
+    reaction,
+    service
   ) => {
-    const slug = generateSlug(content);
+    const slug = generateSlug(experience);
 
     const { data, error } = await SupabaseClient.from('Post').insert({
       user_id,
-      content,
       slug,
-      location,
-      vendor_name,
-      service_type,
-      plate_number,
+      content: experience,
+      location: daerah_driver,
+      vendor_name: platform,
+      service_type: service,
+      plate_number: nopol,
     }).select(`
         id,
         content,
@@ -45,7 +46,6 @@ const PostService = {
     content,
     slug,
     location,
-      ojol_name,
       vendor_name,
       service_type,
       plate_number,

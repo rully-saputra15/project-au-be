@@ -17,16 +17,17 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const { content, location, vendor_name, service_type, plate_number } =
+    const { daerah_driver, experience, nopol, platform, reaction, service } =
       req.body;
 
     const data = await PostService.insertPost(
       4, // ini nanti dari req.user
-      content,
-      location,
-      vendor_name,
-      service_type,
-      plate_number
+      daerah_driver,
+      experience,
+      nopol,
+      platform,
+      reaction,
+      service
     );
 
     jsonSuccess(res, 200, 'Post created successfully', data);

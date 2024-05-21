@@ -1,6 +1,17 @@
 import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
 import CommentService from '../services/comments';
 
+const getAllCommentsByPostId = async (req, res) => {
+  try {
+    const { postId } = req.query;
+    const data = await CommentService.getAll(postId);
+
+    jsonSuccess(res, 200, 'User comments fetched successfully', data);
+  } catch (error) {
+    jsonFailed(res, error);
+  }
+};
+
 const createComments = async (req, res) => {
   try {
     const { post_id, content, parent_id } = req.body;
@@ -19,5 +30,6 @@ const createComments = async (req, res) => {
 };
 
 export default {
+  getAllCommentsByPostId,
   createComments,
 };

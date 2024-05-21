@@ -1,11 +1,7 @@
 import { body, validationResult } from 'express-validator';
 
 const validateCommentRequest = [
-  body('post_id')
-    .notEmpty()
-    .withMessage('Post ID is required')
-    .isNumeric()
-    .withMessage('Invalid Post ID format'),
+  body('post_id').isNumeric().withMessage('Invalid Post ID format'),
   body('parent_id')
     .notEmpty()
     .withMessage('Parent ID is required')
