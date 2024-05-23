@@ -1,8 +1,9 @@
+import axios from 'axios';
 import { jwtEncode } from '../../utils/jwtUtils';
 import SupabaseClient from '../supabase';
 
 const AuthService = {
-    login: async (email, token) => {
+    loginOld: async (email, token) => {
         const { data, error } = await SupabaseClient.from('User')
             .select('*=')
             .eq('email', email)
@@ -19,8 +20,8 @@ const AuthService = {
         }
 
         const mappedData = {
-            user_id: data[0].id,
-            full_name: data[0].full_name,
+            userID: data[0].id,
+            fullname: data[0].fullname,
             avatar: data[0].avatar,
             email: data[0].email,
         };
@@ -29,27 +30,49 @@ const AuthService = {
 
         return { mappedData, token: jwtToken };
     },
-    register: async (email, oauth_token) => {
-        const { error } = await SupabaseClient.from('User')
-            .insert({
-                email: email,
-                oauth_token: oauth_token,
-                full_name: email.match(/^([^@]*)@/)[1]
+    login: async (oauth_token) => {
+        const userDataGoogle = await axios
+            .get(
+                `https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${oauth_token}`
+            )
+            .then((res) => {
+                return res.data;
             });
-        if(error) {
-            throw error;
+
+        const checkData = await SupabaseClient.from('User')
+            .select('*=')
+            .eq('email', userDataGoogle.email);
+
+        if (checkData.data.length !== 0) {
+            const { error } = await SupabaseClient.from('User')
+                .update({ oauth_token })
+                .eq('email', checkData.data.email);
+
+            if (error) {
+                throw error;
+            }
+        } else {
+            const { error } = await SupabaseClient.from('User').insert({
+                email: userDataGoogle.email,
+                fullname: userDataGoogle.name,
+                oauth_token,
+                avatar: userDataGoogle.picture,
+            });
+
+            if (error) {
+                throw error;
+            }
         }
 
         const { data } = await SupabaseClient.from('User')
-            .select("*=")
-            .eq("email", email)
-            .eq("oauth_token", oauth_token);
-        
+            .select('*=')
+            .eq('email', userDataGoogle.email);
+
         const mappedData = {
-            user_id: data[0].id,
-            full_name: data[0].full_name,
-            avatar: data[0].avatar,
+            userID: data[0].id,
             email: data[0].email,
+            fullname: data[0].fullname,
+            avatar: data[0].avatar,
         };
 
         const jwtToken = jwtEncode(data[0].id);

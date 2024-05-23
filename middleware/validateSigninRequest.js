@@ -1,18 +1,8 @@
 import { body, validationResult } from 'express-validator';
 
 const validateSigninRequest = [
-    body('email')
-        .notEmpty()
-        .withMessage('Email is required')
-        .isEmail()
-        .withMessage('Invalid email format'),
-    body('token')
-        .notEmpty()
-        .withMessage('Token is required')
-        .isAlphanumeric()
-        .withMessage('Invalid token format'),
-
-    (req, res, next) => {
+    body('oauth_token').notEmpty().withMessage('Token is required'),
+    async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
@@ -21,6 +11,7 @@ const validateSigninRequest = [
                 errors: errors.array(),
             });
         }
+
         return next();
     },
 ];

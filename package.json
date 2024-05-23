@@ -16,6 +16,7 @@
     "dependencies": {
         "@supabase/supabase-js": "^2.42.7",
         "amazon-cognito-identity-js": "^6.2.0",
+        "axios": "^1.7.2",
         "bcryptjs": "^2.4.3",
         "dotenv": "^16.1.4",
         "express": "^4.18.2",
