@@ -2,9 +2,8 @@ import SupabaseClient from '../supabase';
 
 const UserService = {
   getUserById: async (userId) => {
-    console.log(userId);
     const { data, error } = await SupabaseClient.from('User')
-      .select('name:full_name, email, avatar')
+      .select('name:fullname, email, avatar')
       .eq('id', userId)
       .single();
 

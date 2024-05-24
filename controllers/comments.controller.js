@@ -17,8 +17,8 @@ const createComments = async (req, res) => {
     const { post_id, content, parent_id } = req.body;
 
     const data = await CommentService.insertComments(
+      req.user,
       post_id,
-      4,
       content,
       parent_id
     );
