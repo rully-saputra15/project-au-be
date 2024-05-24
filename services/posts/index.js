@@ -3,7 +3,7 @@ import SupabaseClient from '../supabase';
 
 const PostService = {
   insertPost: async (
-    user_id,
+    authUserId,
     daerah_driver,
     experience,
     nopol,
@@ -14,7 +14,7 @@ const PostService = {
     const slug = generateSlug(experience);
 
     const { data, error } = await SupabaseClient.from('Post').insert({
-      user_id,
+      user_id: authUserId,
       slug,
       content: experience,
       location: daerah_driver,
@@ -34,7 +34,51 @@ const PostService = {
 
     return data;
   },
-  getAll: async (reqUser, currentPage, limit, filterList) => {
+  reactToPost: async (authUserId, post_id, reaction) => {
+    const { data: reactionData, error } = await SupabaseClient.from('Vote')
+      .select('*')
+      .eq('user_id', authUserId)
+      .eq('post_id', post_id)
+      .single();
+
+    if (error) throw error;
+
+    /* Ada 3 kondisi :
+      1. Blm pernah react -> Mau react
+         - Insert baru ke tabel Vote
+
+      2. Pernah react -> mau unreact
+        - Cari row yg existing punya user idnya
+        - Update is_visible jadi false dan ambil reaction dari existing row
+
+      3. Sudah pernah unreact -> mau react
+        - Cari row yg existing punya user idnya
+        - Update is_visible jadi true dan ambil reaction dari FE
+    */
+
+    // Kondisi 2 dan 3
+    if (reactionData) {
+      const { error: updateError } = await SupabaseClient.from('Vote')
+        .update({
+          is_visible: !reactionData.is_visible,
+          type: reaction ?? reactionData.type,
+        })
+        .eq('user_id', authUserId)
+        .eq('post_id', post_id);
+
+      if (updateError) throw updateError;
+    } else {
+      // Kondisi 1
+      const { error: insertError } = await SupabaseClient.from('Vote').insert({
+        user_id: authUserId,
+        post_id,
+        type: reaction,
+      });
+      if (insertError) throw insertError;
+    }
+  },
+
+  getAll: async (authUserId, currentPage, limit, filterList) => {
     const startIndex = (currentPage - 1) * limit;
     const endIndex = currentPage * limit;
 
@@ -42,10 +86,10 @@ const PostService = {
     let query = SupabaseClient.from('Post')
       .select(
         `
-    id,
-    content,
-    slug,
-    location,
+      id,
+      content,
+      slug,
+      location,
       vendor_name,
       service_type,
       plate_number,
@@ -56,7 +100,7 @@ const PostService = {
       ),
       User(
         id,
-        full_name
+        fullname
       )
     `
       )
@@ -75,16 +119,15 @@ const PostService = {
 
     const mappedData = data.map((item) => {
       const userReaction = item.user_reactions?.find(
-        ({ User }) => User.id === reqUser.id
+        ({ User }) => User.id === authUserId
       );
 
       return {
         id: item.id,
-        created_by: item.User?.full_name,
+        created_by: item.User?.fullname,
         content: item.content,
         slug: item.slug,
         driver_location: item.location,
-        ojol_name: item.ojol_name,
         vendor_name: item.vendor_name,
         service_type: item.service_type,
         plate_number: item.plate_number,
