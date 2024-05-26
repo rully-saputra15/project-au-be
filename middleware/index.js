@@ -1,5 +1,14 @@
 import validateSigninRequest from './validateSigninRequest';
 import validatePostRequest from './validatePostRequest';
 import validateCommentRequest from './validateCommentRequest';
+import validatePostReactRequest from './validatePostReactRequest';
 
-export { validateSigninRequest, validatePostRequest, validateCommentRequest };
+import validateJwtToken from './validateJwtToken.middleware';
+
+export {
+  validateSigninRequest,
+  validatePostRequest,
+  validateCommentRequest,
+  validatePostReactRequest,
+  validateJwtToken,
+};

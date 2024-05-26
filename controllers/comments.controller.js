@@ -15,13 +15,14 @@ const getAllCommentsByPostId = async (req, res) => {
 const createComments = async (req, res) => {
     try {
         const { post_id, content, parent_id } = req.body;
-
-        const data = await CommentService.insertComments(
-            post_id,
-            4,
-            content,
-            parent_id
-        );
+      
+ 
+    const data = await CommentService.insertComments(
+      req.user,
+      post_id,
+      content,
+      parent_id
+    );
 
         jsonSuccess(res, 200, 'Comment created successfully', data);
     } catch (error) {
