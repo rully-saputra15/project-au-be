@@ -77,7 +77,7 @@ const AuthService = {
             email: data.email,
         };
 
-        const jwtToken = jwtEncode(data[0].id);
+        const jwtToken = jwtEncode(data.id);
 
         return { mappedData, token: jwtToken };
     },

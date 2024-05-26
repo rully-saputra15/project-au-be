@@ -11,5 +11,6 @@ module.exports = {
     rules: {
         'prettier/prettier': ['error', { endOfLine: 'auto' }],
         camelcase: 'off',
+        'import/no-import-module-exports': 'off',
     },
 };

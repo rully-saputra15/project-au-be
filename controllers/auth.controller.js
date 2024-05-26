@@ -1,5 +1,5 @@
 import AuthService from '../services/auth';
-import { jsonFailed, jsonSuccess } from '../utils/messageFormat.helpers';
+import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
 
 const signIn = async (req, res) => {
     const { oauth_token } = req.body;
