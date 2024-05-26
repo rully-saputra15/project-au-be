@@ -41,9 +41,10 @@ const AuthService = {
 
         const checkData = await SupabaseClient.from('User')
             .select('*=')
-            .eq('email', userDataGoogle.email);
+            .eq('email', userDataGoogle.email)
+            .single();
 
-        if (checkData.data.length !== 0) {
+        if (checkData.data) {
             const { error } = await SupabaseClient.from('User')
                 .update({ oauth_token })
                 .eq('email', checkData.data.email);
@@ -66,13 +67,14 @@ const AuthService = {
 
         const { data } = await SupabaseClient.from('User')
             .select('*=')
-            .eq('email', userDataGoogle.email);
+            .eq('email', userDataGoogle.email)
+            .single();
 
         const mappedData = {
-            userID: data[0].id,
-            email: data[0].email,
-            fullname: data[0].fullname,
-            avatar: data[0].avatar,
+            user_id: data.id,
+            fullname: data.fullname,
+            avatar: data.avatar,
+            email: data.email,
         };
 
         const jwtToken = jwtEncode(data[0].id);
