@@ -1,10 +1,10 @@
 import SupabaseClient from '../supabase';
 
 const CommentService = {
-  getAll: async (postId) => {
-    const { data, error } = await SupabaseClient.from('Comment')
-      .select(
-        `
+    getAll: async (postId) => {
+        const { data, error } = await SupabaseClient.from('Comment')
+            .select(
+                `
         id,
         content,
         User (
@@ -14,10 +14,10 @@ const CommentService = {
           content
         )
       `
-      )
-      .eq('post_id', postId);
+            )
+            .eq('post_id', postId);
 
-    if (error) throw error;
+        if (error) throw error;
 
     return data.map((item) => ({
       comment: item.content,
@@ -35,10 +35,10 @@ const CommentService = {
       })
       .select();
 
-    if (error) throw error;
+        if (error) throw error;
 
-    return data;
-  },
+        return data;
+    },
 };
 
 export default CommentService;

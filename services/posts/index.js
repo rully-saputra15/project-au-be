@@ -30,7 +30,7 @@ const PostService = {
         plate_number
       `);
 
-    if (error) throw error;
+        if (error) throw error;
 
     return data;
   },
@@ -103,19 +103,19 @@ const PostService = {
         fullname
       )
     `
-      )
-      .filter('deleted_at', 'is', null);
+            )
+            .filter('deleted_at', 'is', null);
 
-    if (filterList) {
-      filterList.forEach(({ key, value }) => {
-        query = query.filter(key, 'in', `(${value.join(',')})`);
-      });
-    }
-    const { data, error } = await query
-      .range(startIndex, endIndex)
-      .limit(limit);
+        if (filterList) {
+            filterList.forEach(({ key, value }) => {
+                query = query.filter(key, 'in', `(${value.join(',')})`);
+            });
+        }
+        const { data, error } = await query
+            .range(startIndex, endIndex)
+            .limit(limit);
 
-    if (error) throw error;
+        if (error) throw error;
 
     const mappedData = data.map((item) => {
       const userReaction = item.user_reactions?.find(
@@ -139,18 +139,18 @@ const PostService = {
       };
     });
 
-    let pagination_meta = {
-      current_page: currentPage,
-      limit,
-      ...(endIndex < mappedData.length && { next_page: currentPage + 1 }),
-      ...(startIndex > 0 && { prev_page: currentPage - 1 }),
-    };
+        let pagination_meta = {
+            current_page: currentPage,
+            limit,
+            ...(endIndex < mappedData.length && { next_page: currentPage + 1 }),
+            ...(startIndex > 0 && { prev_page: currentPage - 1 }),
+        };
 
-    return {
-      posts: mappedData,
-      pagination_meta,
-    };
-  },
+        return {
+            posts: mappedData,
+            pagination_meta,
+        };
+    },
 };
 
 export default PostService;
