@@ -6,9 +6,9 @@ import validatePostReactRequest from './validatePostReactRequest';
 import validateJwtToken from './validateJwtToken.middleware';
 
 export {
-  validateSigninRequest,
-  validatePostRequest,
-  validateCommentRequest,
-  validatePostReactRequest,
-  validateJwtToken,
+    validateSigninRequest,
+    validatePostRequest,
+    validateCommentRequest,
+    validatePostReactRequest,
+    validateJwtToken,
 };
