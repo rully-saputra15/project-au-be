@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
 app.use(morgan('dev'));
 
-// app.use(rateLimiter);
+app.use(rateLimiter);
 
 app.post('/api/health-check', (req, res) => {
     res.status(200).send(req.body);
