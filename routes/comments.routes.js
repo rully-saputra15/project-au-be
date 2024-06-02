@@ -1,7 +1,16 @@
 import controller from '../controllers/comments.controller';
-import { validateCommentRequest } from '../middleware';
+import { validateCommentRequest, validateJwtToken } from '../middleware';
 
 export default (app) => {
-  app.get('/api/comments', controller.getAllCommentsByPostId);
-  app.post('/api/comments', validateCommentRequest, controller.createComments);
+    app.get(
+        '/api/comments',
+        validateJwtToken,
+        controller.getAllCommentsByPostId
+    );
+    app.post(
+        '/api/comments',
+        validateJwtToken,
+        validateCommentRequest,
+        controller.createComments
+    );
 };

@@ -1,17 +1,16 @@
 import { body, validationResult } from 'express-validator';
 
-const validateCommentRequest = [
-    body('post_id').isNumeric().withMessage('Invalid Post ID format'),
-    body('parent_id')
+const validatePostReactRequest = [
+    body('post_id')
         .notEmpty()
-        .withMessage('Parent ID is required')
+        .withMessage('Post ID is required')
         .isNumeric()
-        .withMessage('Invalid Parent ID format'),
-    body('content')
-        .notEmpty()
-        .withMessage('Content is required')
-        .isString()
-        .withMessage('Invalid content format'),
+        .withMessage('Invalid Post ID format'),
+
+    body('reaction')
+        .optional()
+        .isIn(['Happy', 'Sad', 'Neutral'])
+        .withMessage('Invalid reaction'),
 
     (req, res, next) => {
         const errors = validationResult(req);
@@ -26,4 +25,4 @@ const validateCommentRequest = [
     },
 ];
 
-export default validateCommentRequest;
+export default validatePostReactRequest;
