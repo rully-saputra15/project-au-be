@@ -1,5 +1,5 @@
-import AuthService from '../services/auth';
-import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
+const AuthService = require('../services/auth');
+const { jsonFailed, jsonSuccess } = require('../helpers/messageFormat.helpers');
 
 const signIn = async (req, res) => {
     const { oauth_token } = req.body;
@@ -15,6 +15,6 @@ const signIn = async (req, res) => {
     }
 };
 
-export default {
+module.exports = {
     signIn,
 };

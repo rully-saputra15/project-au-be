@@ -1,5 +1,5 @@
-import PostService from '../services/posts';
-import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
+const PostService = require('../services/posts');
+const { jsonFailed, jsonSuccess } = require('../helpers/messageFormat.helpers');
 
 const getAllPosts = async (req, res) => {
     try {
@@ -7,12 +7,15 @@ const getAllPosts = async (req, res) => {
         const limit = parseInt(req.query.limit || 5);
         const filter = req.body.search_filters;
 
+        console.log('masuk siniiii');
         const post = await PostService.getAll(
             req.user,
             currentPage,
             limit,
             filter
         );
+
+        console.log('POSTTT', post);
 
         jsonSuccess(res, 200, 'Posts data fetched successfully', post);
     } catch (error) {
@@ -58,7 +61,7 @@ const createPost = async (req, res) => {
     }
 };
 
-export default {
+module.exports = {
     getAllPosts,
     reactToPost,
     createPost,

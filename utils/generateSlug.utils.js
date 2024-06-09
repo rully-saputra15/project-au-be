@@ -1,4 +1,4 @@
-export const generateSlug = (content) => {
+exports.generateSlug = (content) => {
     const characters =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz12345678';
     const emojiRegex = /[^\p{L}\p{N}\p{Z}]/gu;

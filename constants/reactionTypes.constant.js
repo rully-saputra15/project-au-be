@@ -1,7 +1,5 @@
-const REACTION_TYPES = {
+exports.REACTION_TYPES = {
     HAPPY: 'happy',
     SAD: 'sad',
     NEUTRAL: 'neutral',
 };
-
-export default REACTION_TYPES;

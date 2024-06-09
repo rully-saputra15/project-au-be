@@ -1,6 +1,6 @@
-import controller from '../controllers/user.controller';
-import { validateJwtToken } from '../middleware';
+const controller = require('../controllers/user.controller');
+const { validateJwtToken } = require('../middleware');
 
-export default (app) => {
+module.exports = (app) => {
     app.get('/api/user', validateJwtToken, controller.getCurrentUser);
 };

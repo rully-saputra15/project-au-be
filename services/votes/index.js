@@ -1,5 +1,5 @@
-import SupabaseClient from '../supabase';
-import REACTION_TYPES from '../../constants/reactionTypes.constant';
+const SupabaseClient = require('../supabase');
+const REACTION_TYPES = require('../../constants/reactionTypes.constant');
 
 const VoteService = {
     getReactionDataByPostId: async (postId) => {
@@ -71,4 +71,4 @@ const VoteService = {
     },
 };
 
-export default VoteService;
+module.exports = VoteService;
