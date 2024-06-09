@@ -60,7 +60,7 @@ const AuthService = {
         } else {
             const { error } = await SupabaseClient.from('User').insert({
                 email: userDataGoogle.email,
-                fullname: userDataGoogle.name,
+                full_name: userDataGoogle.name,
                 oauth_token,
                 avatar: userDataGoogle.picture,
             });
@@ -77,7 +77,7 @@ const AuthService = {
 
         const mappedData = {
             user_id: data.id,
-            fullname: data.fullname,
+            full_name: data.full_name,
             avatar: data.avatar,
             email: data.email,
         };
