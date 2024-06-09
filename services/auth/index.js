@@ -31,13 +31,18 @@ const AuthService = {
         return { mappedData, token: jwtToken };
     },
     login: async (oauth_token) => {
-        const userDataGoogle = await axios
-            .get(
-                `https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${oauth_token}`
-            )
-            .then((res) => {
-                return res.data;
-            });
+        const userDataGoogle = await fetch(
+            `https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${oauth_token}`
+        ).then((res) => {
+            return res.data;
+        });
+        // const userDataGoogle = await axios
+        //     .get(
+        //         `https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=${oauth_token}`
+        //     )
+        //     .then((res) => {
+        //         return res.data;
+        //     });
 
         const checkData = await SupabaseClient.from('User')
             .select('*=')
