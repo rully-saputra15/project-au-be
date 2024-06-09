@@ -3,7 +3,7 @@ const SupabaseClient = require('../supabase');
 const UserService = {
     getUserById: async (userId) => {
         const { data, error } = await SupabaseClient.from('User')
-            .select('name:fullname, email, avatar')
+            .select('name:full_name, email, avatar')
             .eq('id', userId)
             .single();
 
