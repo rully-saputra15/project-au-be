@@ -1,6 +1,6 @@
-import authRoutes from './auth.routes';
-import postRoutes from './posts.routes';
-import commentRoutes from './comments.routes';
-import userRoutes from './user.routes';
+const authRoutes = require('./auth.routes');
+const postRoutes = require('./posts.routes');
+const commentRoutes = require('./comments.routes');
+const userRoutes = require('./user.routes');
 
-export default [authRoutes, postRoutes, commentRoutes, userRoutes];
+module.exports = [authRoutes, postRoutes, commentRoutes, userRoutes];

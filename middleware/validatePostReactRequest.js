@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator';
+const { body, validationResult } = require('express-validator');
 
 const validatePostReactRequest = [
     body('post_id')
@@ -25,4 +25,4 @@ const validatePostReactRequest = [
     },
 ];
 
-export default validatePostReactRequest;
+module.exports = validatePostReactRequest;

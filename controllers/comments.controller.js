@@ -1,5 +1,5 @@
-import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
-import CommentService from '../services/comments';
+const { jsonFailed, jsonSuccess } = require('../helpers/messageFormat.helpers');
+const CommentService = require('../services/comments');
 
 const getAllCommentsByPostId = async (req, res) => {
     try {
@@ -29,7 +29,7 @@ const createComments = async (req, res) => {
     }
 };
 
-export default {
+module.exports = {
     getAllCommentsByPostId,
     createComments,
 };

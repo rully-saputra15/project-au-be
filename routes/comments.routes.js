@@ -1,15 +1,15 @@
-import controller from '../controllers/comments.controller';
-import { validateCommentRequest, validateJwtToken } from '../middleware';
+const controller = require('../controllers/comments.controller');
+const { validateCommentRequest, validateJwtToken } = require('../middleware');
 
-export default (app) => {
+module.exports = (app) => {
     app.get(
         '/api/comments',
-        validateJwtToken,
+
         controller.getAllCommentsByPostId
     );
     app.post(
         '/api/comments',
-        validateJwtToken,
+
         validateCommentRequest,
         controller.createComments
     );

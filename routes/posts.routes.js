@@ -1,21 +1,21 @@
-import controller from '../controllers/posts.controller';
-import {
+const controller = require('../controllers/posts.controller');
+const {
     validatePostRequest,
     validatePostReactRequest,
     validateJwtToken,
-} from '../middleware';
+} = require('../middleware');
 
-export default (app) => {
-    app.get('/api/posts', validateJwtToken, controller.getAllPosts);
+module.exports = (app) => {
+    app.get('/api/posts', controller.getAllPosts);
     app.post(
         '/api/posts',
-        validateJwtToken,
+
         validatePostRequest,
         controller.createPost
     );
     app.put(
         '/api/posts/reaction',
-        validateJwtToken,
+
         validatePostReactRequest,
         controller.reactToPost
     );

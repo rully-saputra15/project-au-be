@@ -1,4 +1,4 @@
-import SupabaseClient from '../supabase';
+const SupabaseClient = require('../supabase');
 
 const UserService = {
     getUserById: async (userId) => {
@@ -13,4 +13,4 @@ const UserService = {
     },
 };
 
-export default UserService;
+module.exports = UserService;

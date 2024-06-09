@@ -1,6 +1,6 @@
-import controller from '../controllers/auth.controller';
-import { validateSigninRequest } from '../middleware';
+const controller = require('../controllers/auth.controller');
+const { validateSigninRequest } = require('../middleware');
 
-export default (app) => {
+module.exports = (app) => {
     app.post('/api/auth/signin', validateSigninRequest, controller.signIn);
 };

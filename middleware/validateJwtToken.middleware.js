@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { jsonFailed } from '../helpers/messageFormat.helpers';
+const jwt = require('jsonwebtoken');
+const { jsonFailed } = require('../helpers/messageFormat.helpers');
 
 const validateJwtToken = (req, res, next) => {
     try {
@@ -26,4 +26,4 @@ const validateJwtToken = (req, res, next) => {
     }
 };
 
-export default validateJwtToken;
+module.exports = validateJwtToken;

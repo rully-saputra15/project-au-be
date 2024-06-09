@@ -1,19 +1,19 @@
-import SupabaseClient from '../supabase';
+const SupabaseClient = require('../supabase');
 
 const CommentService = {
     getAll: async (postId) => {
         const { data, error } = await SupabaseClient.from('Comment')
             .select(
                 `
-        id,
-        content,
-        User (
-          fullname,
-        ),
-        Comment(
-          content
-        )
-      `
+                id,
+                content,
+                User (
+                    full_name,
+                ),
+                Comment(
+                    content
+                )
+            `
             )
             .eq('post_id', postId);
 
@@ -21,7 +21,7 @@ const CommentService = {
 
         return data.map((item) => ({
             comment: item.content,
-            created_by: item.User.fullname,
+            created_by: item.User.full_name,
             sub_comments: item.Comment,
         }));
     },
@@ -41,4 +41,4 @@ const CommentService = {
     },
 };
 
-export default CommentService;
+module.exports = CommentService;

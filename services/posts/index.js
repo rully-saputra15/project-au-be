@@ -1,5 +1,5 @@
-import { generateSlug } from '../../utils/generateSlug.utils';
-import SupabaseClient from '../supabase';
+const { generateSlug } = require('../../utils/generateSlug.utils');
+const SupabaseClient = require('../supabase');
 
 const PostService = {
     insertPost: async (
@@ -81,6 +81,7 @@ const PostService = {
     },
 
     getAll: async (authUserId, currentPage, limit, filterList) => {
+        console.log('TESTTT');
         const startIndex = (currentPage - 1) * limit;
         const endIndex = currentPage * limit;
 
@@ -102,7 +103,7 @@ const PostService = {
       ),
       User(
         id,
-        fullname
+        full_name
       )
     `
             )
@@ -126,7 +127,7 @@ const PostService = {
 
             return {
                 id: item.id,
-                created_by: item.User?.fullname,
+                created_by: item.User?.full_name,
                 content: item.content,
                 slug: item.slug,
                 driver_location: item.location,
@@ -155,4 +156,4 @@ const PostService = {
     },
 };
 
-export default PostService;
+module.exports = PostService;

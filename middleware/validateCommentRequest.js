@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator';
+const { body, validationResult } = require('express-validator');
 
 const validateCommentRequest = [
     body('post_id').isNumeric().withMessage('Invalid Post ID format'),
@@ -26,4 +26,4 @@ const validateCommentRequest = [
     },
 ];
 
-export default validateCommentRequest;
+module.exports = validateCommentRequest;
