@@ -1,5 +1,5 @@
-import UserService from '../services/user';
-import { jsonFailed, jsonSuccess } from '../helpers/messageFormat.helpers';
+const UserService = require('../services/user');
+const { jsonFailed, jsonSuccess } = require('../helpers/messageFormat.helpers');
 
 const getCurrentUser = async (req, res) => {
     try {
@@ -11,6 +11,6 @@ const getCurrentUser = async (req, res) => {
     }
 };
 
-export default {
+module.exports = {
     getCurrentUser,
 };

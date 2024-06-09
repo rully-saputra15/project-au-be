@@ -1,11 +1,16 @@
-import validateSigninRequest from './validateSigninRequest';
-import validatePostRequest from './validatePostRequest';
-import validateCommentRequest from './validateCommentRequest';
-import validatePostReactRequest from './validatePostReactRequest';
+// import validateSigninRequest from './validateSigninRequest';
+// import validatePostRequest from './validatePostRequest';
+// import validateCommentRequest from './validateCommentRequest';
+// import validatePostReactRequest from './validatePostReactRequest';
+// import validateJwtToken from './validateJwtToken.middleware';
+const validateSigninRequest = require('./validateSigninRequest');
+const validatePostRequest = require('./validatePostRequest');
+const validateCommentRequest = require('./validateCommentRequest');
+const validatePostReactRequest = require('./validatePostReactRequest');
 
-import validateJwtToken from './validateJwtToken.middleware';
+const validateJwtToken = require('./validateJwtToken.middleware');
 
-export {
+module.exports = {
     validateSigninRequest,
     validatePostRequest,
     validateCommentRequest,

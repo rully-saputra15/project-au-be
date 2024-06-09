@@ -1,5 +1,6 @@
-import { jwtEncode } from '../../utils/jwtUtils';
-import SupabaseClient from '../supabase';
+const axios = require('axios');
+const { jwtEncode } = require('../../utils/jwtUtils');
+const SupabaseClient = require('../supabase');
 
 const AuthService = {
     loginOld: async (email, token) => {
@@ -87,4 +88,4 @@ const AuthService = {
     },
 };
 
-export default AuthService;
+module.exports = AuthService;

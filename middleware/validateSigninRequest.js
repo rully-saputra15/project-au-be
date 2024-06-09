@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator';
+const { body, validationResult } = require('express-validator');
 
 const validateSigninRequest = [
     body('oauth_token').notEmpty().withMessage('Token is required'),
@@ -16,4 +16,4 @@ const validateSigninRequest = [
     },
 ];
 
-export default validateSigninRequest;
+module.exports = validateSigninRequest;

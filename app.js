@@ -1,11 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import morgan from 'morgan';
-import rateLimiter from './middleware/rateLimiter.middleware';
-import routes from './routes';
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const routes = require('./routes/index');
+// const rateLimiter = require('./middleware/rateLimiter.middleware');
+require('dotenv').config();
 
-dotenv.config();
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(express.json());
@@ -13,21 +13,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
 app.use(morgan('dev'));
 
-app.use(rateLimiter);
+// app.use(rateLimiter);
 
-app.post('/api/health-check', (req, res) => {
-    res.status(200).send(req.body);
+app.get('/api/health-check', (req, res) => {
+    res.status(200).send({
+        message: 'API is healthy',
+    });
 });
 
 routes.forEach((route) => {
     route(app);
 });
 
-const port = process.env.PORT || 3001;
-
-app.listen(port, () => {
+app.listen(PORT, () => {
     // eslint-disable-next-line no-console
-    console.log(`Server listening on http://localhost:${port}`);
+    console.log(`Server listening on port ${[PORT]}`);
 });
 
 module.exports = app;
