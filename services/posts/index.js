@@ -22,13 +22,13 @@ const PostService = {
             service_type: service,
             plate_number: nopol,
         }).select(`
-        id,
-        content,
-        slug,
-        location,
-        service_type,
-        plate_number
-      `);
+            id,
+            content,
+            slug,
+            location,
+            service_type,
+            plate_number
+        `);
 
         if (error) throw error;
 
@@ -81,7 +81,6 @@ const PostService = {
     },
 
     getAll: async (authUserId, currentPage, limit, filterList) => {
-        console.log('TESTTT');
         const startIndex = (currentPage - 1) * limit;
         const endIndex = currentPage * limit;
 
@@ -89,23 +88,23 @@ const PostService = {
         let query = SupabaseClient.from('Post')
             .select(
                 `
-      id,
-      content,
-      slug,
-      location,
-      vendor_name,
-      service_type,
-      plate_number,
-      reaction:Vote(count),
-      user_reactions:Vote(
-        type,
-        User(id)
-      ),
-      User(
-        id,
-        full_name
-      )
-    `
+                    id,
+                    content,
+                    slug,
+                    location,
+                    vendor_name,
+                    service_type,
+                    plate_number,
+                    reaction:Vote(count),
+                    user_reactions:Vote(
+                        type,
+                        User(id)
+                    ),
+                    User(
+                        id,
+                        full_name
+                    )
+                `
             )
             .filter('deleted_at', 'is', null);
 
@@ -142,7 +141,7 @@ const PostService = {
             };
         });
 
-        let pagination_meta = {
+        const pagination_meta = {
             current_page: currentPage,
             limit,
             ...(endIndex < mappedData.length && { next_page: currentPage + 1 }),
@@ -153,6 +152,29 @@ const PostService = {
             posts: mappedData,
             pagination_meta,
         };
+    },
+
+    getPost: async (slug) => {
+        const { data, error } = await SupabaseClient.from('Post')
+            .select('*, reaction:Vote(count), comment:Comment(count)')
+            .filter('deleted_at', 'is', null)
+            .eq('slug', slug)
+            .single();
+
+        if (error) throw error;
+
+        if (!data) throw new Error('Not Found');
+
+        const mappedData = {
+            service_type: data.service_type,
+            content: data.content,
+            plate_number: data.plate_number,
+            driver_location: data.location,
+            reaction_count: data.reaction[0].count,
+            comments_count: data.comment[0].count,
+        };
+
+        return mappedData;
     },
 };
 
