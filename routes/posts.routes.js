@@ -7,6 +7,7 @@ const {
 
 module.exports = (app) => {
     app.get('/api/posts', controller.getAllPosts);
+    app.get('/api/posts/:slug', controller.getDetailPost);
     app.post(
         '/api/posts',
         validateJwtToken,
