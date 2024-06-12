@@ -3,8 +3,10 @@ const { jsonFailed, jsonSuccess } = require('../helpers/messageFormat.helpers');
 
 const getAllPosts = async (req, res) => {
     try {
-        const currentPage = parseInt(req.query.page || 1, 10);
-        const limit = parseInt(req.query.limit || 5, 10);
+        // eslint-disable-next-line radix
+        const currentPage = parseInt(req.query.page || 1);
+        // eslint-disable-next-line radix
+        const limit = parseInt(req.query.limit || 5);
         const filter = req.body.search_filters;
 
         const post = await PostService.getAll(
